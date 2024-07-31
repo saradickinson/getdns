@@ -60,12 +60,12 @@
 
 #define EDNS0_PADDING_CODE              12
 
-static const char TLS13_CIPHER_SUITE[] =
-        "TLS13-AES-256-GCM-SHA384:"
-        "TLS13-CHACHA20-POLY1305-SHA256:"
-        "TLS13-AES-128-GCM-SHA256:"
-        "TLS13-AES-128-CCM-8-SHA256:"
-        "TLS13-AES-128-CCM-SHA256";
+// static const char TLS13_CIPHER_SUITE[] =
+//         "TLS13-AES-256-GCM-SHA384:"
+//         "TLS13-CHACHA20-POLY1305-SHA256:"
+//         "TLS13-AES-128-GCM-SHA256:"
+//         "TLS13-AES-128-CCM-8-SHA256:"
+//         "TLS13-AES-128-CCM-SHA256";
 
 #define EXAMPLE_PIN "pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\""
 
@@ -1471,14 +1471,14 @@ static exit_value test_tls13(struct test_info_s *test_info,
         }
 
         /*
-         * Set cipher list to TLS 1.3-only ciphers. If we are using
+         * Set min version to TLS 1.3. If we are using
          * an OpenSSL version that doesn't support TLS 1.3 this will cause
          * a Bad Context error on the lookup.
          */
-        if ((ret = getdns_context_set_tls_cipher_list(test_info->context, TLS13_CIPHER_SUITE)) != GETDNS_RETURN_GOOD) {
+        if ((ret = getdns_context_set_tls_min_version(test_info->context, GETDNS_TLS1_3)) != GETDNS_RETURN_GOOD) {
                 snprintf(test_info->base_output,
                          MAX_BASE_OUTPUT_LEN,
-                         "Cannot set TLS 1.3 cipher list: %s (%d)",
+                         "Cannot set TLS 1.3 as min version: %s (%d)",
                          getdns_get_errorstr_by_id(ret),
                          ret);
                 return EXIT_UNKNOWN;
